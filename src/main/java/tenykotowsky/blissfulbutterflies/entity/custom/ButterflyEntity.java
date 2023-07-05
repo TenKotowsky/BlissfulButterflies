@@ -54,6 +54,6 @@ public class ButterflyEntity extends PathAwareEntity implements GeoEntity {
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return null;
+        return cache;
     }
 }
