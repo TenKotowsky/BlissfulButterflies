@@ -18,6 +18,9 @@
 		"main": [
           "tenykotowsky.blissfulbutterflies.BlissfulButterflies"
 		],
+		"client" : [
+			"tenykotowsky.blissfulbutterflies.BlissfulButterfliesClient"
+		],
 		"fabric-datagen": [
 			"tenykotowsky.blissfulbutterflies.BlissfulButterfliesDataGenerator"
 		]
