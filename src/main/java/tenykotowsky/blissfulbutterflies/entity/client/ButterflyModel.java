@@ -18,7 +18,7 @@ public class ButterflyModel extends GeoModel<ButterflyEntity> {
 
     @Override
     public Identifier getTextureResource(ButterflyEntity animatable) {
-        return new Identifier(BlissfulButterflies.MOD_ID, "textures/entity/monarch_butterfly.png");
+        return ButterflyRenderer.LOCATION_BY_VARIANT.get(animatable.getVariant());
     }
 
     @Override
