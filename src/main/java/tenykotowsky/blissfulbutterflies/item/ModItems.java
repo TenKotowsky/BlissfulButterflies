@@ -14,7 +14,7 @@ import tenykotowsky.blissfulbutterflies.entity.ModEntities;
 
 public class ModItems {
     public static final Item BUTTERFLY_SPAWN_EGG = registerItem("butterfly_spawn_egg",
-            new SpawnEggItem(ModEntities.BUTTERFLY, 0xD57E36, 0x1D0D00,
+            new SpawnEggItem(ModEntities.BUTTERFLY, 0xEC5C0F, 0x111010,
                     new FabricItemSettings()));
 
     public static void addItemsToItemGroups() {

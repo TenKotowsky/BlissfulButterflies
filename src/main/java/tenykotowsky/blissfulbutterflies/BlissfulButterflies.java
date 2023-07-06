@@ -9,6 +9,7 @@ import software.bernie.geckolib.GeckoLib;
 import tenykotowsky.blissfulbutterflies.entity.ModEntities;
 import tenykotowsky.blissfulbutterflies.entity.custom.ButterflyEntity;
 import tenykotowsky.blissfulbutterflies.item.ModItems;
+import tenykotowsky.blissfulbutterflies.world.gen.ModWorldGeneration;
 
 public class BlissfulButterflies implements ModInitializer {
 	// This logger is used to write text to the console and the log file.
@@ -24,6 +25,8 @@ public class BlissfulButterflies implements ModInitializer {
 		// Proceed with mild caution.
 
 		ModItems.registerModItems();
+
+		ModWorldGeneration.generateModWorldGen();
 
 		GeckoLib.initialize();
 

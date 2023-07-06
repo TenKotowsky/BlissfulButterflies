@@ -59,9 +59,8 @@
 					"name": "left_wing",
 					"parent": "body",
 					"pivot": [1, 16, 0],
-					"mirror": true,
 					"cubes": [
-						{"origin": [0, 7, 1.5], "size": [10, 16, 1], "uv": [42, 0]}
+						{"origin": [0, 7, 1.5], "size": [10, 16, 1], "uv": [42, 0], "mirror":  true}
 					]
 				}
 			]
