@@ -14,5 +14,5 @@ public class ModEntities {
     public static final EntityType<ButterflyEntity> BUTTERFLY = Registry.register(
             Registries.ENTITY_TYPE, new Identifier(BlissfulButterflies.MOD_ID, "butterfly"),
             FabricEntityTypeBuilder.create(SpawnGroup.AMBIENT, ButterflyEntity::new)
-                    .dimensions(EntityDimensions.fixed(1.5f, 1.75f)).build());
+                    .dimensions(EntityDimensions.fixed(1.1f, 1.1f)).build());
 }

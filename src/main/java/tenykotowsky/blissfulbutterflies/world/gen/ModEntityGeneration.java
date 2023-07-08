@@ -12,13 +12,16 @@ import tenykotowsky.blissfulbutterflies.entity.custom.ButterflyEntity;
 public class ModEntityGeneration {
     public static void addSpawns() {
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.PLAINS), SpawnGroup.AMBIENT,
-                ModEntities.BUTTERFLY, 30, 4, 10);
+                ModEntities.BUTTERFLY, 30, 5, 11);
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.FLOWER_FOREST), SpawnGroup.AMBIENT,
-                ModEntities.BUTTERFLY, 30, 4, 10);
+                ModEntities.BUTTERFLY, 30, 5, 11);
 
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.SUNFLOWER_PLAINS), SpawnGroup.AMBIENT,
-                ModEntities.BUTTERFLY, 30, 4, 10);
+                ModEntities.BUTTERFLY, 30, 5, 11);
+
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.CHERRY_GROVE), SpawnGroup.AMBIENT,
+                ModEntities.BUTTERFLY, 30, 5, 11);
 
         SpawnRestriction.register(ModEntities.BUTTERFLY, SpawnRestriction.Location.ON_GROUND,
                 Heightmap.Type.WORLD_SURFACE, ButterflyEntity::canSpawn);

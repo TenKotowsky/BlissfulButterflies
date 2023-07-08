@@ -1,9 +1,16 @@
 package tenykotowsky.blissfulbutterflies.entity.custom;
 
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.AboveGroundTargeting;
+import net.minecraft.entity.ai.NoPenaltySolidTargeting;
 import net.minecraft.entity.ai.control.FlightMoveControl;
 import net.minecraft.entity.ai.control.MoveControl;
+import net.minecraft.entity.ai.goal.FlyGoal;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.WanderAroundFarGoal;
+import net.minecraft.entity.ai.goal.WanderAroundGoal;
+import net.minecraft.entity.ai.pathing.BirdNavigation;
+import net.minecraft.entity.ai.pathing.EntityNavigation;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -13,6 +20,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.FlyingEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
+import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.world.ServerWorld;
@@ -20,6 +28,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LocalDifficulty;
@@ -45,6 +54,7 @@ public class ButterflyEntity extends PathAwareEntity implements GeoEntity {
         super(entityType, world);
 
         this.moveControl = new FlightMoveControl(this, 12, true);
+        this.setPathfindingPenalty(PathNodeType.BLOCKED, -1.0F);
         this.setPathfindingPenalty(PathNodeType.DANGER_FIRE, -1.0F);
         this.setPathfindingPenalty(PathNodeType.WATER, -1.0F);
         this.setPathfindingPenalty(PathNodeType.LAVA, -1.0F);
@@ -88,7 +98,7 @@ public class ButterflyEntity extends PathAwareEntity implements GeoEntity {
     public static DefaultAttributeContainer.Builder setAttributes() {
         return FlyingEntity.createMobAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 2.0D)
-                .add(EntityAttributes.GENERIC_FLYING_SPEED, 1.4f);
+                .add(EntityAttributes.GENERIC_FLYING_SPEED, 1.1f);
     }
 
     @Override
@@ -103,35 +113,64 @@ public class ButterflyEntity extends PathAwareEntity implements GeoEntity {
 
     @Override
     protected void initGoals() {
-        this.goalSelector.add(1, new FlyRandomlyGoal(this));}
+        this.goalSelector.add(1, new ButterflyWanderAroundGoal());}
 
-    static class FlyRandomlyGoal
+    @Override
+    protected EntityNavigation createNavigation(World world) {
+        BirdNavigation birdNavigation = new BirdNavigation(this, world){
+
+            @Override
+            public boolean isValidPosition(BlockPos pos) {
+                return !this.world.getBlockState(pos.down()).isAir();
+            }
+
+            @Override
+            public void tick() {
+                super.tick();
+            }
+        };
+        birdNavigation.setCanPathThroughDoors(false);
+        birdNavigation.setCanSwim(false);
+        birdNavigation.setCanEnterOpenDoors(true);
+        return birdNavigation;
+    }
+
+    class ButterflyWanderAroundGoal
             extends Goal {
-        private final ButterflyEntity butterfly;
+        private static final int MAX_DISTANCE = 22;
 
-        public FlyRandomlyGoal(ButterflyEntity butterfly) {
-            this.butterfly = butterfly;
+        ButterflyWanderAroundGoal() {
             this.setControls(EnumSet.of(Goal.Control.MOVE));
         }
 
         @Override
         public boolean canStart() {
-            MoveControl moveControl = this.butterfly.getMoveControl();
-            return !moveControl.isMoving();
+            return ButterflyEntity.this.navigation.isIdle() && ButterflyEntity.this.random.nextInt(10) == 0;
         }
 
         @Override
         public boolean shouldContinue() {
-            return false;
+            return ButterflyEntity.this.navigation.isFollowingPath();
         }
 
         @Override
         public void start() {
-            Random random = this.butterfly.getRandom();
-            double d = this.butterfly.getX() + (double)((random.nextFloat() * 2.0f - 1.0f) * 64.0f) * 8;
-            double e = this.butterfly.getY() + (double)((random.nextFloat() * 2.0f - 1.0f) * 2.0f);
-            double f = this.butterfly.getZ() + (double)((random.nextFloat() * 2.0f - 1.0f) * 64.0f) * 8;
-            this.butterfly.getMoveControl().moveTo(d, e, f, this.butterfly.getAttributeBaseValue(EntityAttributes.GENERIC_FLYING_SPEED));
+            Vec3d vec3d = this.getRandomLocation();
+            if (vec3d != null) {
+                ButterflyEntity.this.navigation.startMovingAlong(ButterflyEntity.this.navigation.findPathTo(BlockPos.ofFloored(vec3d), 1), 1.1);
+            }
+        }
+
+        @Nullable
+        private Vec3d getRandomLocation() {
+            Vec3d vec3d2;
+            vec3d2 = ButterflyEntity.this.getRotationVec(0.0f);
+            int i = 8;
+            Vec3d vec3d3 = AboveGroundTargeting.find(ButterflyEntity.this, 8, 7, vec3d2.x, vec3d2.z, 1.5707964f, 3, 1);
+            if (vec3d3 != null) {
+                return vec3d3;
+            }
+            return NoPenaltySolidTargeting.find(ButterflyEntity.this, 8, 4, -2, vec3d2.x, vec3d2.z, 1.5707963705062866);
         }
     }
 
