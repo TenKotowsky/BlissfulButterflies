@@ -21,11 +21,18 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.FlyingEntity;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.passive.BeeEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUsage;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
@@ -42,10 +49,13 @@ import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInst
 import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
+import tenykotowsky.blissfulbutterflies.BlissfulButterflies;
 import tenykotowsky.blissfulbutterflies.entity.ModEntities;
 import tenykotowsky.blissfulbutterflies.entity.variant.ButterflyVariant;
+import tenykotowsky.blissfulbutterflies.item.ModItems;
 
 import java.util.EnumSet;
+import java.util.logging.Logger;
 
 public class ButterflyEntity extends PathAwareEntity implements GeoEntity {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
@@ -109,6 +119,18 @@ public class ButterflyEntity extends PathAwareEntity implements GeoEntity {
     @Override
     protected SoundEvent getDeathSound() {
         return SoundEvents.ENTITY_GENERIC_DEATH;
+    }
+
+    @Override
+    public ActionResult interactMob(PlayerEntity player, Hand hand) {
+        ItemStack itemStack = player.getStackInHand(hand);
+        if (itemStack.isOf(ModItems.BUTTERFLY_NET) && itemStack.getOrCreateNbt().get("Variant") == null) {
+            player.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0f, 1.0f);
+            this.discard();
+            itemStack.getOrCreateNbt().putString("Variant", this.getVariant().toString());
+            return ActionResult.success(this.getWorld().isClient);
+        }
+        return super.interactMob(player, hand);
     }
 
     @Override
@@ -238,7 +260,7 @@ public class ButterflyEntity extends PathAwareEntity implements GeoEntity {
         return this.dataTracker.get(DATA_ID_TYPE_VARIANT);
     }
 
-    private void setVariant(ButterflyVariant variant) {
+    public void setVariant(ButterflyVariant variant) {
         this.dataTracker.set(DATA_ID_TYPE_VARIANT, variant.getId() & 255);
     }
 }
