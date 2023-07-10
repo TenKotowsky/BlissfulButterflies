@@ -14,6 +14,9 @@ public class ModEntityGeneration {
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.PLAINS), SpawnGroup.AMBIENT,
                 ModEntities.BUTTERFLY, 30, 5, 11);
 
+        BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.FOREST), SpawnGroup.AMBIENT,
+                ModEntities.BUTTERFLY, 30, 5, 11);
+
         BiomeModifications.addSpawn(BiomeSelectors.includeByKey(BiomeKeys.FLOWER_FOREST), SpawnGroup.AMBIENT,
                 ModEntities.BUTTERFLY, 30, 5, 11);
 
