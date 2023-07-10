@@ -128,6 +128,7 @@ public class ButterflyEntity extends PathAwareEntity implements GeoEntity {
             player.playSound(SoundEvents.BLOCK_BEEHIVE_ENTER, 1.0f, 1.0f);
             this.discard();
             itemStack.getOrCreateNbt().putString("Variant", this.getVariant().toString());
+            itemStack.getOrCreateNbt().putInt("CustomModelData", 1);
             return ActionResult.success(this.getWorld().isClient);
         }
         return super.interactMob(player, hand);

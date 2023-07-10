@@ -53,6 +53,7 @@ public class ButterflyNet extends Item {
             world.emitGameEvent((Entity) context.getPlayer(), GameEvent.ENTITY_PLACE, blockPos);
 
             itemStack.getOrCreateNbt().remove("Variant");
+            itemStack.getOrCreateNbt().putInt("CustomModelData", 0);
             context.getPlayer().playSound(SoundEvents.BLOCK_BEEHIVE_EXIT, SoundCategory.PLAYERS, 1.0f, 1.0f);
             return ActionResult.SUCCESS;
         }

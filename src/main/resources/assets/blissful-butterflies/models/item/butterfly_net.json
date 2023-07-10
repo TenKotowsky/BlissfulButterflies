@@ -1,6 +1,17 @@
 {
   "parent": "item/handheld",
-  "textures": {
-    "layer0": "blissful-butterflies:item/butterfly_net"
-  }
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 0
+      },
+      "model": "blissful-butterflies:item/butterfly_net_empty"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1
+      },
+      "model": "blissful-butterflies:item/butterfly_net_full"
+    }
+  ]
 }
