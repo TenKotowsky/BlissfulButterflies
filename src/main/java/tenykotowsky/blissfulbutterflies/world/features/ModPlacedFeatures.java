@@ -21,7 +21,7 @@ public class ModPlacedFeatures {
         var configuredFeatureRegistryEntryLookup = context.getRegistryLookup(RegistryKeys.CONFIGURED_FEATURE);
 
         register(context, CHERRY_COCOON_TREE_PLACED_KEY, configuredFeatureRegistryEntryLookup.getOrThrow(ModWorldGeneration.CHERRY_COCOON_TREE_KEY),
-                VegetationPlacedFeatures.treeModifiersWithWouldSurvive(PlacedFeatures.createCountExtraModifier(1, 0.05f, 1), Blocks.CHERRY_SAPLING));
+                VegetationPlacedFeatures.treeModifiersWithWouldSurvive(PlacedFeatures.createCountExtraModifier(1, 0.02f, 1), Blocks.CHERRY_SAPLING));
     }
 
     public static RegistryKey<PlacedFeature> registerKey(String name) {

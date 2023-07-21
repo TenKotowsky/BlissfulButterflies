@@ -25,7 +25,7 @@ public class ModWorldGeneration {
     public static final RegistryKey<ConfiguredFeature<?, ?>> CHERRY_COCOON_TREE_KEY = registerKey("cherry_cocoon_tree");
 
     static List<Direction> directions = new ArrayList<>(Collections.singleton(Direction.DOWN));
-    static List<TreeDecorator> decorators = new ArrayList<>(Collections.singleton(new AttachedToLeavesTreeDecorator(0.03f, 1, 1, BlockStateProvider.of(ModBlocks.COCOON.getDefaultState()), 1, directions)));
+    static List<TreeDecorator> decorators = new ArrayList<>(Collections.singleton(new AttachedToLeavesTreeDecorator(0.01f, 1, 1, BlockStateProvider.of(ModBlocks.COCOON.getDefaultState()), 1, directions)));
     public static void bootstrap(Registerable<ConfiguredFeature<?, ?>> context) {
         register(context, CHERRY_COCOON_TREE_KEY, Feature.TREE, new TreeFeatureConfig.Builder(
                 BlockStateProvider.of(Blocks.CHERRY_LOG),
