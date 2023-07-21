@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRe
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import software.bernie.geckolib.GeckoLib;
+import tenykotowsky.blissfulbutterflies.block.ModBlocks;
 import tenykotowsky.blissfulbutterflies.entity.ModEntities;
 import tenykotowsky.blissfulbutterflies.entity.custom.ButterflyEntity;
 import tenykotowsky.blissfulbutterflies.item.ModItems;
@@ -24,11 +25,13 @@ public class BlissfulButterflies implements ModInitializer {
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
 
+		GeckoLib.initialize();
+
+		ModBlocks.registerModBlocks();
+
 		ModItems.registerModItems();
 
 		ModWorldGeneration.generateModWorldGen();
-
-		GeckoLib.initialize();
 
 		FabricDefaultAttributeRegistry.register(ModEntities.BUTTERFLY, ButterflyEntity.setAttributes());
 

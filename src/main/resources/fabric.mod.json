@@ -9,7 +9,7 @@
 	],
 	"contact": {
 		"homepage": "https://curseforge.com/minecraft/mc-mods/blissful-butterflies",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/TenKotowsky/BlissfulButterflies"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/blissful-butterflies/icon.png",

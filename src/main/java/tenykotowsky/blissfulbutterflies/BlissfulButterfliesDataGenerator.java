@@ -2,7 +2,12 @@ package tenykotowsky.blissfulbutterflies;
 
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.minecraft.registry.RegistryBuilder;
+import net.minecraft.registry.RegistryKeys;
 import tenykotowsky.blissfulbutterflies.data.ModModelProvider;
+import tenykotowsky.blissfulbutterflies.world.ModWorldGenerator;
+import tenykotowsky.blissfulbutterflies.world.features.ModPlacedFeatures;
+import tenykotowsky.blissfulbutterflies.world.gen.ModWorldGeneration;
 
 public class BlissfulButterfliesDataGenerator implements DataGeneratorEntrypoint {
 	@Override
@@ -10,6 +15,13 @@ public class BlissfulButterfliesDataGenerator implements DataGeneratorEntrypoint
 		FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 
 		pack.addProvider(ModModelProvider::new);
+		pack.addProvider(ModWorldGenerator::new);
 
+	}
+
+	@Override
+	public void buildRegistry(RegistryBuilder registryBuilder) {
+		registryBuilder.addRegistry(RegistryKeys.CONFIGURED_FEATURE, ModWorldGeneration::bootstrap);
+		registryBuilder.addRegistry(RegistryKeys.PLACED_FEATURE, ModPlacedFeatures::bootstrap);
 	}
 }
