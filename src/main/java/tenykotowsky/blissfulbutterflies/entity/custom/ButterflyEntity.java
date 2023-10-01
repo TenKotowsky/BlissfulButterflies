@@ -69,6 +69,8 @@ public class ButterflyEntity extends PathAwareEntity implements GeoEntity {
         this.setPathfindingPenalty(PathNodeType.WATER, -1.0F);
         this.setPathfindingPenalty(PathNodeType.LAVA, -1.0F);
         this.setPathfindingPenalty(PathNodeType.WATER_BORDER, 16.0F);
+        this.setPathfindingPenalty(PathNodeType.RAIL, 16.0F);
+        this.setPathfindingPenalty(PathNodeType.DANGER_OTHER, 16.0F);
     }
 
     @Override
